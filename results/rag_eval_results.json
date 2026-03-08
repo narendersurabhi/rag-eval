@@ -1,0 +1,72 @@
+{
+  "aggregate": {
+    "retrieval_recall": 0.8333333333333334,
+    "context_precision": 0.6458997991256056,
+    "answer_accuracy": 0.3333333333333333,
+    "faithfulness": 1.0,
+    "hallucination_rate": 0.0,
+    "llm_judge_score": 0.6
+  },
+  "samples": [
+    {
+      "question": "What is the capital of France?",
+      "ground_truth": "Paris",
+      "answer": "Paris",
+      "retrieved_docs": [
+        "France is a country in Europe. Its capital city is Paris.",
+        "Mars is often called the Red Planet because of its reddish appearance.",
+        "Paris has major landmarks like the Eiffel Tower."
+      ],
+      "metrics": {
+        "retrieval_recall": 1.0,
+        "context_precision": 0.7096774193548387,
+        "answer_accuracy": 1.0,
+        "faithfulness": 1.0,
+        "hallucination_rate": 0.0,
+        "llm_judge_score": 1.0,
+        "llm_judge_verdict": "excellent",
+        "llm_judge_rationale": "Question: What is the capital of France? | Accuracy=1.00, Faithfulness=1.00. The answer is judged as excellent."
+      }
+    },
+    {
+      "question": "Which planet is known as the Red Planet?",
+      "ground_truth": "Mars",
+      "answer": "Mars is often called the Red Planet because of its reddish appearance.",
+      "retrieved_docs": [
+        "Mars is often called the Red Planet because of its reddish appearance.",
+        "Paris has major landmarks like the Eiffel Tower.",
+        "Hamlet is a tragedy written by William Shakespeare."
+      ],
+      "metrics": {
+        "retrieval_recall": 0.5,
+        "context_precision": 0.5357142857142857,
+        "answer_accuracy": 0.0,
+        "faithfulness": 1.0,
+        "hallucination_rate": 0.0,
+        "llm_judge_score": 0.4,
+        "llm_judge_verdict": "partial",
+        "llm_judge_rationale": "Question: Which planet is known as the Red Planet? | Accuracy=0.00, Faithfulness=1.00. The answer is judged as partial."
+      }
+    },
+    {
+      "question": "Who wrote Hamlet?",
+      "ground_truth": "William Shakespeare",
+      "answer": "Shakespeare wrote many famous plays and sonnets.",
+      "retrieved_docs": [
+        "Shakespeare wrote many famous plays and sonnets.",
+        "Hamlet is a tragedy written by William Shakespeare.",
+        "France is a country in Europe. Its capital city is Paris."
+      ],
+      "metrics": {
+        "retrieval_recall": 1.0,
+        "context_precision": 0.6923076923076923,
+        "answer_accuracy": 0.0,
+        "faithfulness": 1.0,
+        "hallucination_rate": 0.0,
+        "llm_judge_score": 0.4,
+        "llm_judge_verdict": "partial",
+        "llm_judge_rationale": "Question: Who wrote Hamlet? | Accuracy=0.00, Faithfulness=1.00. The answer is judged as partial."
+      }
+    }
+  ]
+}
