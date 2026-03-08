@@ -1,0 +1,26 @@
+[
+  {
+    "question": "What is the capital of France?",
+    "ground_truth": "Paris",
+    "relevant_documents": [
+      "France is a country in Europe. Its capital city is Paris.",
+      "Paris has major landmarks like the Eiffel Tower."
+    ]
+  },
+  {
+    "question": "Which planet is known as the Red Planet?",
+    "ground_truth": "Mars",
+    "relevant_documents": [
+      "Mars is often called the Red Planet because of its reddish appearance.",
+      "Mars has two moons, Phobos and Deimos."
+    ]
+  },
+  {
+    "question": "Who wrote Hamlet?",
+    "ground_truth": "William Shakespeare",
+    "relevant_documents": [
+      "Hamlet is a tragedy written by William Shakespeare.",
+      "Shakespeare wrote many famous plays and sonnets."
+    ]
+  }
+]
