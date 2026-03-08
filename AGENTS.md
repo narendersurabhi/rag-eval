@@ -1,7 +1,7 @@
 # AGENTS Log and Working Notes
 
 ## Repository status
-This repository now contains a complete baseline RAG evaluation harness, including retrieval, generation, evaluation metrics, experiment runner, dataset, and output artifacts.
+This repository now contains a baseline RAG evaluation harness plus a modular LLM-judge subsystem with rubric-driven scoring and aggregation.
 
 ## Agent instructions
 - Always read this file before making updates.
@@ -20,5 +20,15 @@ This repository now contains a complete baseline RAG evaluation harness, includi
 - Added experiment script `experiments/run_rag_eval.py` to run end-to-end evaluation and write JSON results.
 - Added project documentation in `README.md` with a dedicated RAG harness section.
 - Generated baseline output file at `results/rag_eval_results.json`.
-
 - Added `.gitignore` rules to exclude Python bytecode and cache directories.
+
+### 2026-03-09
+- Added a new evaluation package at `src/evaluation/judges/` with:
+  - `rubrics.py` for reusable rubric prompt templates.
+  - `llm_judge.py` containing an `LLMJudge` interface, JSON parsing flow, and deterministic fallback `HeuristicJudgeClient`.
+  - `judge_runner.py` for per-sample execution and aggregate judge metrics.
+- Added package init files at `src/evaluation/__init__.py` and `src/evaluation/judges/__init__.py`.
+- Updated `src/rag_eval/evaluator.py` to use the new judge module and return rubric-aligned scores (`judge_correctness`, `judge_faithfulness`, `judge_completeness`, `judge_overall`) plus explanation text.
+- Updated `experiments/run_rag_eval.py` to aggregate and print judge rubric scores in the evaluation summary.
+- Refreshed documentation in `README.md` with an `LLM Judge Evaluation` section and updated repository structure.
+- Re-ran the evaluation script and regenerated `results/rag_eval_results.json` with the new judge metrics.
