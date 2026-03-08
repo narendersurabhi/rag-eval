@@ -5,7 +5,10 @@
     "answer_accuracy": 0.3333333333333333,
     "faithfulness": 1.0,
     "hallucination_rate": 0.0,
-    "llm_judge_score": 0.6
+    "judge_correctness": 4.0,
+    "judge_faithfulness": 10.0,
+    "judge_completeness": 8.666666666666666,
+    "judge_overall": 7.555666666666667
   },
   "samples": [
     {
@@ -23,9 +26,11 @@
         "answer_accuracy": 1.0,
         "faithfulness": 1.0,
         "hallucination_rate": 0.0,
-        "llm_judge_score": 1.0,
-        "llm_judge_verdict": "excellent",
-        "llm_judge_rationale": "Question: What is the capital of France? | Accuracy=1.00, Faithfulness=1.00. The answer is judged as excellent."
+        "judge_correctness": 10,
+        "judge_faithfulness": 10,
+        "judge_completeness": 10,
+        "judge_overall": 10.0,
+        "judge_explanation": "Heuristic judge fallback: scores are derived from exact-match accuracy, context faithfulness, and ground-truth token coverage."
       }
     },
     {
@@ -43,9 +48,11 @@
         "answer_accuracy": 0.0,
         "faithfulness": 1.0,
         "hallucination_rate": 0.0,
-        "llm_judge_score": 0.4,
-        "llm_judge_verdict": "partial",
-        "llm_judge_rationale": "Question: Which planet is known as the Red Planet? | Accuracy=0.00, Faithfulness=1.00. The answer is judged as partial."
+        "judge_correctness": 1,
+        "judge_faithfulness": 10,
+        "judge_completeness": 10,
+        "judge_overall": 7.0,
+        "judge_explanation": "Heuristic judge fallback: scores are derived from exact-match accuracy, context faithfulness, and ground-truth token coverage."
       }
     },
     {
@@ -63,9 +70,11 @@
         "answer_accuracy": 0.0,
         "faithfulness": 1.0,
         "hallucination_rate": 0.0,
-        "llm_judge_score": 0.4,
-        "llm_judge_verdict": "partial",
-        "llm_judge_rationale": "Question: Who wrote Hamlet? | Accuracy=0.00, Faithfulness=1.00. The answer is judged as partial."
+        "judge_correctness": 1,
+        "judge_faithfulness": 10,
+        "judge_completeness": 6,
+        "judge_overall": 5.667,
+        "judge_explanation": "Heuristic judge fallback: scores are derived from exact-match accuracy, context faithfulness, and ground-truth token coverage."
       }
     }
   ]

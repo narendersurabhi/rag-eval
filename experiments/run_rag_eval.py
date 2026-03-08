@@ -62,7 +62,10 @@ def main() -> None:
             "answer_accuracy",
             "faithfulness",
             "hallucination_rate",
-            "llm_judge_score",
+            "judge_correctness",
+            "judge_faithfulness",
+            "judge_completeness",
+            "judge_overall",
         ]
     }
 
@@ -75,7 +78,11 @@ def main() -> None:
     print(f"Answer Accuracy:    {aggregate['answer_accuracy']:.2f}")
     print(f"Faithfulness:       {aggregate['faithfulness']:.2f}")
     print(f"Hallucination Rate: {aggregate['hallucination_rate']:.2f}")
-    print(f"LLM Judge Score:    {aggregate['llm_judge_score']:.2f}")
+    print("\nLLM Judge Scores")
+    print(f"Correctness:       {aggregate['judge_correctness']:.2f}")
+    print(f"Faithfulness:      {aggregate['judge_faithfulness']:.2f}")
+    print(f"Completeness:      {aggregate['judge_completeness']:.2f}")
+    print(f"Overall:           {aggregate['judge_overall']:.2f}")
 
     print("\nHallucination Rate (lower is better)")
     hall = aggregate["hallucination_rate"]
