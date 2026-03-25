@@ -9,6 +9,7 @@ Evaluate retrieval-augmented generation pipelines using reproducible benchmarks.
 ### Metrics
 
 - Retrieval Recall
+- Retrieval Recall by ID (optional; recommended for production retrievers)
 - Context Precision
 - Answer Accuracy
 - Faithfulness
@@ -26,7 +27,8 @@ rag-eval/
 │   ├── retriever.py
 │   ├── generator.py
 │   ├── evaluator.py
-│   └── metrics.py
+│   ├── metrics.py
+│   └── types.py
 ├── src/evaluation/judges/
 │   ├── llm_judge.py
 │   ├── rubrics.py
@@ -38,13 +40,60 @@ rag-eval/
 └── results/
 ```
 
-### Run evaluation
+### Run baseline evaluation
 
 ```bash
 python experiments/run_rag_eval.py
 ```
 
 The script writes results to `results/rag_eval_results.json`.
+
+## Using this repo with Qdrant hybrid retrieval (BM25 + vector)
+
+The baseline `KeywordRetriever` is only a local demo. For your production stack, you can pass your own retrieval outputs into `RAGEvaluator`.
+
+### 1) Return `RetrievedDocument` objects from your retriever
+
+```python
+from rag_eval import RetrievedDocument
+
+# convert Qdrant + BM25 fused results into this shape
+RetrievedDocument(
+    text=payload["text"],
+    doc_id=payload["doc_id"],     # strongly recommended
+    score=fused_score,
+    source="qdrant_hybrid",
+    metadata={"bm25": bm25_score, "vector": vector_score},
+)
+```
+
+### 2) Provide a dataset with gold relevant document IDs
+
+For each QA sample, store both:
+- `relevant_documents` (for text-based metrics)
+- `relevant_doc_ids` (for robust retrieval scoring)
+
+### 3) Evaluate with ID-aware recall
+
+```python
+metrics = evaluator.evaluate(
+    question=question,
+    answer=answer,
+    retrieved_docs=retrieved_docs,          # list[RetrievedDocument]
+    ground_truth=ground_truth,
+    relevant_docs=relevant_documents,
+    relevant_doc_ids=relevant_doc_ids,      # enables retrieval_recall_by_id
+)
+```
+
+### Why this matters for hybrid retrieval
+
+When you fuse BM25 and vector search, returned text can differ slightly (chunking, normalization, metadata formatting). Exact string matching underestimates retrieval quality. `retrieval_recall_by_id` lets you evaluate retrieval on stable IDs instead of raw text.
+
+
+### Metric definitions
+
+Detailed metric formulas and per-metric logic are documented in `docs/evaluation_metric_logic.md`.
 
 ## LLM Judge Evaluation
 

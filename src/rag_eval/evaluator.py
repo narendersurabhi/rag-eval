@@ -7,6 +7,7 @@ from typing import Sequence
 from evaluation.judges import JudgeRunner, LLMJudge
 
 from . import metrics
+from .types import RetrievedDocument, docs_to_text
 
 
 class RAGEvaluator:
@@ -19,18 +20,19 @@ class RAGEvaluator:
         self,
         question: str,
         answer: str,
-        retrieved_docs: Sequence[str],
+        retrieved_docs: Sequence[str | RetrievedDocument],
         ground_truth: str,
         relevant_docs: Sequence[str],
+        relevant_doc_ids: Sequence[str] | None = None,
     ) -> dict[str, float | str]:
         judge_result = self.judge_runner.evaluate_sample(
             question=question,
-            context=retrieved_docs,
+            context=docs_to_text(retrieved_docs),
             answer=answer,
             ground_truth=ground_truth,
         )
 
-        return {
+        output: dict[str, float | str] = {
             "retrieval_recall": metrics.retrieval_recall(retrieved_docs, relevant_docs),
             "context_precision": metrics.context_precision(retrieved_docs, relevant_docs),
             "answer_accuracy": metrics.answer_accuracy(answer, ground_truth),
@@ -42,3 +44,11 @@ class RAGEvaluator:
             "judge_overall": judge_result.overall_score,
             "judge_explanation": judge_result.explanation,
         }
+
+        if relevant_doc_ids is not None:
+            output["retrieval_recall_by_id"] = metrics.retrieval_recall_by_id(
+                retrieved_docs,
+                relevant_doc_ids,
+            )
+
+        return output
